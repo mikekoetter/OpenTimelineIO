@@ -360,7 +360,17 @@ def _transcribe(item, parent, editRate, masterMobs):
         # Markers come in on their own separate Track.
         # TODO: We should consolidate them onto the same track(s) as the clips
         # result = otio.schema.Marker()
-        pass
+        comment = str(item['Comment'].value)
+        pos = int(item['Position'].value)
+        tr = otio.opentime.TimeRange(
+            otio.opentime.RationalTime(pos, editRate),
+            otio.opentime.RationalTime(pos, editRate)
+        )
+        result = otio.schema.Marker(
+            name=comment,
+            marked_range=tr
+        )
+    
 
     elif isinstance(item, aaf2.components.Selector):
         # If you mute a clip in media composer, it becomes one of these in the
